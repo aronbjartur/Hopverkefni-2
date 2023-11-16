@@ -1,0 +1,163 @@
+
+:root {
+    --accent: 136, 58, 234;
+    --accent-light: 224, 204, 250;
+    --accent-dark: 49, 10, 101;
+    --accent-gradient: linear-gradient(
+        45deg,
+        rgb(var(--accent)),
+        rgb(var(--accent-light)) 30%,
+        white 60%
+    );
+}
+
+html {
+    font-family: poppins;
+    background: #E2E2E2;
+    background-size: 224px;
+}
+
+
+
+/* beinagrind af skölun
+img ætti að vera vöru box
+*/
+
+img {
+    object-fit: cover;
+    margin: 10px;
+    height:  300px;
+    width: 300px;
+    max-width: 100%;
+    transition: 0.3s ease;
+}
+@media screen and (max-width: 990px) {
+    img {
+        height: 250px;
+        width: 250px;
+    }
+}
+
+@media screen and (max-width: 810px) {
+    img {
+        height: 200px;
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 440px) {
+    img {
+        height: 300px;
+        width: 300px;
+    }
+}
+
+/* header */ 
+.container h1{
+    color: #0bad0e;
+
+}
+body{
+    margin: 0;
+    font-family: Poppins;
+}
+.container{
+    width: 900px;
+    margin: auto;
+    max-width: 90vw;
+    text-align: center;
+    padding-top: 10px;
+    transition: transform .5s;
+}
+svg{
+    width: 30px;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+.icon-cart{
+    position: relative;
+}
+/* hringurinn utan um fjölda í körfu */
+.icon-cart span{
+    position: absolute;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #fff;
+    top: 50%;
+    right: -20px;
+}
+
+/* listi */
+.container .list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 50px;
+}
+
+/* cardið sem sýnir hverja vöru */
+
+.card {
+    position: fixed;
+    top: 0;
+    left: 100%;
+    width: 500px;
+    background-color: #dadada;
+    border-left: 1px solid #0bad0e;
+    height: 100vh;
+    transition: 0.5s;
+}
+
+.active .card {
+    left: calc(100% - 500px);
+
+}
+
+.active .container {
+    transform: translateX(-200px);
+}
+
+.card h1 {
+    color: #0bad0e;
+    font-weight: 300;
+    margin: 0;
+    padding: 0 20px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+.card .afgreidsla{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+}
+
+.card .afgreidsla div{
+    background-color: #0bad0e;
+    color: #fff;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+
+.card .afgreidsla div:nth-child(2){
+    background-color: #1c1f25;
+    color: #fff;
+}
