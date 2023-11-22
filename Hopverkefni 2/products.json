@@ -1,20 +1,20 @@
 [
     {
         "id": 1,
-        "name":" Hægindastóllinn askur",
+        "name":" Hægindastóllinn Askur",
         "price": 20000,
         "image": "../image/stoll1.png",
         "category": "Stólar",
-        "description": "afar þægilegur og góður og fallegur stóll"
+        "description": "Afar þægilegur, góður og fallegur stóll"
         
     },
     {
         "id": 2,
-        "name":" Hægindastóllinn vegur",
+        "name":" Hægindastóllinn Vegur",
         "price": 25000,
         "image": "../image/stoll2.png",
         "category": "Stólar",
-        "description": "Fallegur blár stóll sem var hannaður í Finnlandi árið 2008 og hefur margar verðlaunir"
+        "description": "Fallegur blár stóll sem var hannaður í Finnlandi árið 2008 og hefur unnið mörg verðlaun"
     },
     {
         "id": 3,
@@ -22,20 +22,20 @@
         "price": 290,
         "image": "../image/hotdog.png",
         "category": "Matur",
-        "description": "ss pulsa með steiktum lauk, tómatsósu og remólaði ofan á"
+        "description": "SS pulsa með steiktum lauk, tómatsósu og remólaði"
     },
     {
         "id": 4,
         "name":" Hamborgari",
-        "price": 900,
+        "price": 990,
         "image": "../image/hamburger.png",
         "category": "Matur",
-        "description": "Hamborgarinn whopper frá burger king. Með alvöru íslensku kjöti"
+        "description": "Hamborgarinn Whopper frá Burger king. Með alvöru íslensku kjöti"
     },
     {
         "id": 5,
         "name":" Rólex úr",
-        "price": 300000,
+        "price": 49900,
         "image": "../image/rolex.png",
         "category": "Úr",
         "description": "Fallegt Rólex úr af týpunni Rolex Datejust 126331 Chocolate Dial"
@@ -43,7 +43,7 @@
     {
         "id": 6,
         "name":" Casio úr",
-        "price": 8622,
+        "price": 9900,
         "image": "../image/casio.png",
         "category": "Úr",
         "description": "Fallegt Casio úr af týpunni Rolex Datejust 126331 Chocolate Dial"
@@ -51,23 +51,34 @@
     {
         "id": 7,
         "name":" Toyota Yaris",
-        "price": 18900,
+        "price": 189000,
         "image": "../image/yaris.png",
-        "category": "Bílar"
+        "category": "Bílar",
+        "description": "Frábær ending og frábær bíll fyrir námsmenn eða fólk sem að stenfir á að koma sér aftur á beinu brautina"
     },
     {
         "id": 8,
         "name":" Lambo",
-        "price": 200,
+        "price": 20000000,
         "image": "../image/lambo.png",
-        "category": "Bílar"
+        "category": "Bílar",
+        "description": "Flottasti bíllinn á markaðinum, það er ekki hægt að biðja um fallegri bíl"
     },
     {
         "id": 9,
         "name":" Spaghetti",
-        "price": 7,
+        "price": 1490,
         "image": "../image/Spaghetti.png",
-        "category": "Matur"
+        "category": "Matur",
+        "description": "Ekta ítalskt spagetti gert úr hreinræktuðu ítölsku hveiti og íslensku hakki"
+    },
+    {
+        "id": 10,
+        "name":" Pizza",
+        "price": 1990,
+        "image": "../image/Pizza.png",
+        "category": "Matur",
+        "description": "Ekta ítölsk 16 tommu pizza, gerð með náttúrulegum hráefnum"
     }
 
 ]
