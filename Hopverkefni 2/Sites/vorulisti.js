@@ -16,27 +16,33 @@ closeCart.addEventListener('click', () => {
     body.classList.toggle('showCart');
 })
 
-    const addDataToHTML = () => {
+const addDataToHTML = () => {
     // null still html data
 
-        // bætir við data
-        if(products.length > 0) // ef það hefur data þá
-        {
-            products.forEach(product => {
-                let newProduct = document.createElement('div');
-                newProduct.dataset.id = product.id;
-                newProduct.classList.add('item');
-                newProduct.classList.add(product.category); 
-                newProduct.innerHTML =  // það sem er prentað út (þetta er product kassinn)
-                `<img src="${product.image}" alt="">
-                <h2>${product.name}</h2>
+    // bætir við data
+    if (products.length > 0) // ef það hefur data þá
+    {
+        products.forEach(product => {
+            let newProduct = document.createElement('div');
+            newProduct.dataset.id = product.id;
+            newProduct.classList.add('item');
+            newProduct.classList.add(product.category);
+            newProduct.innerHTML =  // það sem er prentað út (þetta er product kassinn)
+                `<a href="vorusida.html?id=${product.id}">
+                    <img src="${product.image}" alt="">
+                </a>
+                <h2 class="Vorunafn">${product.name}</h2>
                 <h4>${product.category}</h4>
                 <div class="price">${product.price}kr</div>
                 <button class="addCart">Add To Cart</button>`;
-                listProductHTML.appendChild(newProduct);
-            });
-        }
+            listProductHTML.appendChild(newProduct);
+        });
     }
+}
+
+
+
+
     listProductHTML.addEventListener('click', (event) => {
         let positionClick = event.target;
         if(positionClick.classList.contains('addCart')){
