@@ -45,6 +45,15 @@ header{
     text-decoration: none; 
 }
 
+.vorulisti {
+    text-decoration: none;
+    color: inherit;
+}
+
+.vorulisti :hover {
+    text-decoration: none; 
+}
+
 }
 .listProduct .item img{
     width: 90%;
