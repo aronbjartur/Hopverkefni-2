@@ -186,3 +186,36 @@ body.showCart .container{
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+
+.Vorunafn {
+    color: #353432; /* Set the desired text color */
+    text-decoration: none; /* Remove the underline */
+}
+
+
+
+/* Add these styles to your CSS */
+.similar-products {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.similar-product-item {
+    width: 30%; /* Adjust the width as needed */
+    margin: 1%; /* Add some margin between items */
+    box-sizing: border-box; /* Include padding and border in the total width/height */
+    display: inline-block; /* Display items in a row */
+}
+
+.similar-product-item img {
+    max-width: 100%; /* Ensure images don't exceed the width of their container */
+    height: auto; /* Maintain the aspect ratio of the images */
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+    .similar-product-item {
+        width: 48%; /* Adjust width for smaller screens */
+    }
+}
