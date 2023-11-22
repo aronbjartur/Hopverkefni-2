@@ -35,8 +35,16 @@ header{
     top: 50%;
     right: -20px;
 }
-.title{
+.title a {
+    text-decoration: none;
+    color: inherit;
     font-size: xx-large;
+}
+
+.title a:hover {
+    text-decoration: none; 
+}
+
 }
 .listProduct .item img{
     width: 90%;
