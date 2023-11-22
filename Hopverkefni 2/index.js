@@ -16,61 +16,73 @@ closeCart.addEventListener('click', () => {
     body.classList.toggle('showCart');
 })
 
-    const addDataToHTML = () => {
+const addDataToHTML = () => {
     // null still html data
 
-        // bætir við data
-        if(products.length > 0) // ef það hefur data þá
-        {
-            products.forEach(product => {
-                let newProduct = document.createElement('div');
-                newProduct.dataset.id = product.id;
-                newProduct.classList.add('item');
-                newProduct.innerHTML =  // það sem er prentað út (þetta er product kassinn)
-                `<img src="${product.image}" alt="">
-                <h2>${product.name}</h2>
+    // bætir við data
+    if (products.length > 0) // ef það hefur data þá
+    {
+        products.forEach(product => {
+            let newProduct = document.createElement('div');
+            newProduct.dataset.id = product.id;
+            newProduct.classList.add('item');
+            newProduct.innerHTML =  // það sem er prentað út (þetta er product kassinn)
+                `<a href="Sites/vorusida.html?id=${product.id}">
+                    <img src="${product.image}" alt="">
+                </a>
+                <h2 class="product-name">${product.name}</h2>
                 <h4>${product.category}</h4>
                 <div class="price">${product.price}kr</div>
                 <button class="addCart">Add To Cart</button>`;
-                listProductHTML.appendChild(newProduct);
-            });
-        }
+            listProductHTML.appendChild(newProduct);
+        });
     }
-    listProductHTML.addEventListener('click', (event) => {
-        let positionClick = event.target;
-        if(positionClick.classList.contains('addCart')){
-            let id_product = positionClick.parentElement.dataset.id;
-            addToCart(id_product);
-        } // þetta bætir við úr product cardi yfir í körfu
-    })
+}
+
+
+
+listProductHTML.addEventListener('click', (event) => {
+    let positionClick = event.target;
+    if (positionClick.classList.contains('addCart')) {
+        let id_product = positionClick.parentElement.dataset.id;
+        addToCart(id_product);
+    } else if (positionClick.tagName === 'IMG') {
+        // Check if the clicked element is an image
+        let id_product = positionClick.parentElement.dataset.id;
+        navigateToProductPage(id_product);
+    }
+});
+
 const addToCart = (product_id) => {
     let positionThisProductInCart = cart.findIndex((value) => value.product_id == product_id);
-    if(cart.length <= 0){
+    if (cart.length <= 0) {
         cart = [{
             product_id: product_id,
             quantity: 1
         }];
-    }else if(positionThisProductInCart < 0){
+    } else if (positionThisProductInCart < 0) {
         cart.push({
             product_id: product_id,
             quantity: 1
         });
-    }else{
+    } else {
         cart[positionThisProductInCart].quantity = cart[positionThisProductInCart].quantity + 1;
     }
     addCartToHTML();
     addCartToMemory();
 }
+
 const addCartToMemory = () => {
     localStorage.setItem('cart', JSON.stringify(cart)); // memory 1
-} 
+}
+
 const addCartToHTML = () => {
     listCartHTML.innerHTML = '';
     let totalQuantity = 0;
     let totalPrice = 0; // total byrjar sem 0
-    if(cart.length > 0){
+    if (cart.length > 0) {
         cart.forEach(item => {
-            totalQuantity = totalQuantity +  item.quantity;
+            totalQuantity = totalQuantity + item.quantity;
             let newItem = document.createElement('div');
             newItem.classList.add('item');
             newItem.dataset.id = item.product_id;
@@ -100,34 +112,32 @@ const addCartToHTML = () => {
     total.innerText = totalPrice.toLocaleString(); // sýnir total verð
 }
 
-
-
-
 listCartHTML.addEventListener('click', (event) => {
     let positionClick = event.target;
-    if(positionClick.classList.contains('minus') || positionClick.classList.contains('plus')){
+    if (positionClick.classList.contains('minus') || positionClick.classList.contains('plus')) {
         let product_id = positionClick.parentElement.parentElement.dataset.id;
         let type = 'minus';
-        if(positionClick.classList.contains('plus')){
+        if (positionClick.classList.contains('plus')) {
             type = 'plus';
         }
         changeQuantityCart(product_id, type);
     }
 })
+
 const changeQuantityCart = (product_id, type) => {
     let positionItemInCart = cart.findIndex((value) => value.product_id == product_id);
-    if(positionItemInCart >= 0){
+    if (positionItemInCart >= 0) {
         let info = cart[positionItemInCart];
         switch (type) {
             case 'plus':
                 cart[positionItemInCart].quantity = cart[positionItemInCart].quantity + 1;
                 break;
-        
+
             default:
                 let changeQuantity = cart[positionItemInCart].quantity - 1;
                 if (changeQuantity > 0) {
                     cart[positionItemInCart].quantity = changeQuantity;
-                }else{
+                } else {
                     cart.splice(positionItemInCart, 1);
                 }
                 break;
@@ -137,26 +147,31 @@ const changeQuantityCart = (product_id, type) => {
     addCartToMemory();
 }
 
+const navigateToProductPage = (product_id) => {
+    // Redirect to the corresponding vorusida.html with the product ID
+    window.location.href = `vorusida.html?id=${product_id}`;
+}
 
+let isAppInitialized = false;
 
+const initApp = () => {
+    if (isAppInitialized) {
+        return; // If already initialized, do nothing
+    }
 
-
-const initApp = () => { //byrjar forrit og þá memory 2
     fetch("products.json")
         .then(response => response.json())
         .then(data => {
-            products = data;
+            products = data.slice(0, 6);
             addDataToHTML();
 
-            // tjekkar ef það er ehv data á localStorage
-            if(localStorage.getItem("cart")) {
-                // Parse (tjáir?) körfudata úr localstorage 
+            if (localStorage.getItem("cart")) {
                 cart = JSON.parse(localStorage.getItem("cart"));
-
-                // Addar körfu data í html
                 addCartToHTML();
             }
-        }); 
+        });
+
+    isAppInitialized = true;
 };
 
 initApp();
