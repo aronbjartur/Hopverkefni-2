@@ -30,8 +30,9 @@ const addDataToHTML = () => {
             newProduct.innerHTML =  // það sem er prentað út (þetta er product kassinn)
                 `<a href="vorusida.html?id=${product.id}">
                     <img src="${product.image}" alt="">
+                    <h2 class="Vorunafn">${product.name}</h2>
                 </a>
-                <h2 class="Vorunafn">${product.name}</h2>
+                
                 <h4>${product.category}</h4>
                 <div class="price">${product.price}kr</div>
                 <button class="addCart">Add To Cart</button>`;
