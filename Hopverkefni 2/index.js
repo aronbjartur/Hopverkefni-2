@@ -1,178 +1,126 @@
-let listProductHTML = document.querySelector('.listProduct');
-let listCartHTML = document.querySelector('.listCart');
-let iconCart = document.querySelector('.icon-cart');
-let iconCartSpan = document.querySelector('.icon-cart span');
-let body = document.querySelector('body');
-let closeCart = document.querySelector('.close');
-let total = document.querySelector(".total");
-let products = [];
-let cart = [];
+let listProductHTML = document.querySelector(".listProduct"),
+    listCartHTML = document.querySelector(".listCart"),
+    iconCart = document.querySelector(".icon-cart"),
+    iconCartSpan = document.querySelector(".icon-cart span"),
+    body = document.querySelector("body"),
+    closeCart = document.querySelector(".close"),
+    total = document.querySelector(".total"),
+    products = [],
+    cart = [];
 
-/*lokar og opnar körfunni*/
-iconCart.addEventListener('click', () => {
-    body.classList.toggle('showCart');
-})
-closeCart.addEventListener('click', () => {
-    body.classList.toggle('showCart');
-})
-
-const addDataToHTML = () => {
-    // null still html data
-
-    // bætir við data
-    if (products.length > 0) // ef það hefur data þá
-    {
-        products.forEach(product => {
-            let newProduct = document.createElement('div');
-            newProduct.dataset.id = product.id;
-            newProduct.classList.add('item');
-            newProduct.innerHTML =  // það sem er prentað út (þetta er product kassinn)
-                `<a href="Sites/vorusida.html?id=${product.id}">
-                    <img src="${product.image}" alt="">
-                    <h2 class="product-name">${product.name}</h2>
-                </a>
-                
-                <h4>${product.category}</h4>
-                <div class="price">${product.price}kr</div>
-                <button class="addCart">Add To Cart</button>`;
-            listProductHTML.appendChild(newProduct);
-        });
-    }
-}
-
-
-
-listProductHTML.addEventListener('click', (event) => {
-    let positionClick = event.target;
-    if (positionClick.classList.contains('addCart')) {
-        let id_product = positionClick.parentElement.dataset.id;
-        addToCart(id_product);
-    } else if (positionClick.tagName === 'IMG') {
-        // Check if the clicked element is an image
-        let id_product = positionClick.parentElement.dataset.id;
-        navigateToProductPage(id_product);
-    }
+iconCart.addEventListener("click", () => {
+    body.classList.toggle("showCart")
+});
+closeCart.addEventListener("click", () => {
+    body.classList.toggle("showCart")
 });
 
-const addToCart = (product_id) => {
-    let positionThisProductInCart = cart.findIndex((value) => value.product_id == product_id);
-    if (cart.length <= 0) {
-        cart = [{
-            product_id: product_id,
-            quantity: 1
-        }];
-    } else if (positionThisProductInCart < 0) {
-        cart.push({
-            product_id: product_id,
-            quantity: 1
-        });
-    } else {
-        cart[positionThisProductInCart].quantity = cart[positionThisProductInCart].quantity + 1;
-    }
-    addCartToHTML();
-    addCartToMemory();
-}
+const addDataToHTML = () => {
+    products.items.length > 0 && products.items.forEach(t => {
+        let a = document.createElement("div");
+        a.dataset.id = t.id;
+        a.classList.add("item");
+        a.innerHTML = `<a href="Sites/vorusida.html?id=${t.id}">
+                    <img src="${t.image}" alt="">
+                    <h2 class="product-name">${t.title}</h2>
+                </a>
+                
+                <h4>${t.category_title}</h4>
+                <div class="price">${t.price}kr</div>
+                <button class="addCart">Add To Cart</button>`;
+        listProductHTML.appendChild(a)
+    })
+};
 
-const addCartToMemory = () => {
-    localStorage.setItem('cart', JSON.stringify(cart)); // memory 1
-}
+listProductHTML.addEventListener("click", t => {
+    let a = t.target;
+    a.classList.contains("addCart") ? addToCart(a.parentElement.dataset.id) : "IMG" === a.tagName && navigateToProductPage(a.parentElement.dataset.id)
+});
 
-const addCartToHTML = () => {
-    listCartHTML.innerHTML = '';
-    let totalQuantity = 0;
-    let totalPrice = 0; // total byrjar sem 0
-    if (cart.length > 0) {
-        cart.forEach(item => {
-            totalQuantity = totalQuantity + item.quantity;
-            let newItem = document.createElement('div');
-            newItem.classList.add('item');
-            newItem.dataset.id = item.product_id;
-
-            let positionProduct = products.findIndex((value) => value.id == item.product_id);
-            let info = products[positionProduct];
-            listCartHTML.appendChild(newItem);
-            newItem.innerHTML = `
+const addToCart = t => {
+    let a = cart.findIndex(a => a.product_id == t);
+    cart.length <= 0 ? cart = [{
+        product_id: t,
+        quantity: 1
+    }] : a < 0 ? cart.push({
+        product_id: t,
+        quantity: 1
+    }) : cart[a].quantity = cart[a].quantity + 1, addCartToHTML(), addCartToMemory()
+},
+    addCartToMemory = () => {
+        localStorage.setItem("cart", JSON.stringify(cart))
+    },
+    addCartToHTML = () => {
+        listCartHTML.innerHTML = "";
+        let t = 0,
+            a = 0;
+        cart.length > 0 && cart.forEach(e => {
+            t += e.quantity;
+            let i = document.createElement("div");
+            i.classList.add("item");
+            i.dataset.id = e.product_id;
+            let r = products.items[products.items.findIndex(t => t.id == e.product_id)];
+            listCartHTML.appendChild(i);
+            i.innerHTML = `
             <div class="image">
-                    <img src="${info.image}">
+                    <img src="${r.image}">
                 </div>
                 <div class="name">
-                ${info.name}
+                ${r.title}
                 </div>
-                <div class="totalPrice">${info.price * item.quantity} kr</div>
+                <div class="totalPrice">${r.price * e.quantity} kr</div>
                 <div class="quantity">
                     <span class="minus"><</span>
-                    <span>${item.quantity}</span>
+                    <span>${e.quantity}</span>
                     <span class="plus">></span>
                 </div>
             `;
-            totalPrice += info.price * item.quantity; // reiknar total verð
-        })
+            a += r.price * e.quantity
+        }), iconCartSpan.innerText = t, total.innerText = a.toLocaleString()
+    };
+
+listCartHTML.addEventListener("click", t => {
+    let a = t.target;
+    if (a.classList.contains("minus") || a.classList.contains("plus")) {
+        let e = a.parentElement.parentElement.dataset.id,
+            i = "minus";
+        a.classList.contains("plus") && (i = "plus"), changeQuantityCart(e, i)
     }
-    iconCartSpan.innerText = totalQuantity;
+});
 
-    total.innerText = totalPrice.toLocaleString(); // sýnir total verð
-}
-
-listCartHTML.addEventListener('click', (event) => {
-    let positionClick = event.target;
-    if (positionClick.classList.contains('minus') || positionClick.classList.contains('plus')) {
-        let product_id = positionClick.parentElement.parentElement.dataset.id;
-        let type = 'minus';
-        if (positionClick.classList.contains('plus')) {
-            type = 'plus';
+const changeQuantityCart = (t, a) => {
+    let e = cart.findIndex(a => a.product_id == t);
+    if (e >= 0) {
+        if (cart[e], "plus" === a) cart[e].quantity = cart[e].quantity + 1;
+        else {
+            let i = cart[e].quantity - 1;
+            i > 0 ? cart[e].quantity = i : cart.splice(e, 1)
         }
-        changeQuantityCart(product_id, type);
+        addCartToHTML(), addCartToMemory()
     }
-})
+},
+    navigateToProductPage = t => {
+        window.location.href = `vorusida.html?id=${t}`
+    };
 
-const changeQuantityCart = (product_id, type) => {
-    let positionItemInCart = cart.findIndex((value) => value.product_id == product_id);
-    if (positionItemInCart >= 0) {
-        let info = cart[positionItemInCart];
-        switch (type) {
-            case 'plus':
-                cart[positionItemInCart].quantity = cart[positionItemInCart].quantity + 1;
-                break;
-
-            default:
-                let changeQuantity = cart[positionItemInCart].quantity - 1;
-                if (changeQuantity > 0) {
-                    cart[positionItemInCart].quantity = changeQuantity;
-                } else {
-                    cart.splice(positionItemInCart, 1);
-                }
-                break;
-        }
-    }
-    addCartToHTML();
-    addCartToMemory();
-}
-
-const navigateToProductPage = (product_id) => {
-    // Redirect to the corresponding vorusida.html with the product ID
-    window.location.href = `vorusida.html?id=${product_id}`;
-}
-
-let isAppInitialized = false;
+let isAppInitialized = !1;
 
 const initApp = () => {
-    if (isAppInitialized) {
-        return; // If already initialized, do nothing
+    if (!isAppInitialized) {
+        fetch("https://vef1-2023-h2-api-791d754dda5b.herokuapp.com/products?limit=6")
+            .then(t => t.json())
+            .then(t => {
+                products = t;
+                addDataToHTML();
+                if (localStorage.getItem("cart")) {
+                    cart = JSON.parse(localStorage.getItem("cart"));
+                    addCartToHTML();
+                }
+            });
+        isAppInitialized = !0;
     }
-
-    fetch("products.json")
-        .then(response => response.json())
-        .then(data => {
-            products = data.slice(0, 6);
-            addDataToHTML();
-
-            if (localStorage.getItem("cart")) {
-                cart = JSON.parse(localStorage.getItem("cart"));
-                addCartToHTML();
-            }
-        });
-
-    isAppInitialized = true;
 };
+
+document.querySelector('.listProduct').style.gridTemplateColumns = 'repeat(2, 1fr)';
 
 initApp();

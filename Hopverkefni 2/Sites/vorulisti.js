@@ -1,206 +1,142 @@
-let listProductHTML = document.querySelector('.listProduct');
-let listCartHTML = document.querySelector('.listCart');
-let iconCart = document.querySelector('.icon-cart');
-let iconCartSpan = document.querySelector('.icon-cart span');
-let body = document.querySelector('body');
-let closeCart = document.querySelector('.close');
-let total = document.querySelector(".total");
-let products = [];
-let cart = [];
+let listProductHTML=document.querySelector(".listProduct"),
+    listCartHTML=document.querySelector(".listCart"),
+    iconCart=document.querySelector(".icon-cart"),
+    iconCartSpan=document.querySelector(".icon-cart span"),
+    body=document.querySelector("body"),
+    closeCart=document.querySelector(".close"),
+    total=document.querySelector(".total"),
+    products=[],
+    cart=[];
 
-/*lokar og opnar körfunni*/
-iconCart.addEventListener('click', () => {
-    body.classList.toggle('showCart');
-})
-closeCart.addEventListener('click', () => {
-    body.classList.toggle('showCart');
-})
+iconCart.addEventListener("click",()=>{body.classList.toggle("showCart")});
+closeCart.addEventListener("click",()=>{body.classList.toggle("showCart")});
 
-const addDataToHTML = () => {
-    // null still html data
+// Fetch categories from API
+fetch('https://vef1-2023-h2-api-791d754dda5b.herokuapp.com/categories')
+    .then(response => response.json())
+    .then(data => {
+        const buttonsDiv = document.getElementById('buttons');
 
-    // bætir við data
-    if (products.length > 0) // ef það hefur data þá
-    {
-        products.forEach(product => {
-            let newProduct = document.createElement('div');
-            newProduct.dataset.id = product.id;
-            newProduct.classList.add('item');
-            newProduct.classList.add(product.category);
-            newProduct.innerHTML =  // það sem er prentað út (þetta er product kassinn)
-                `<a href="vorusida.html?id=${product.id}">
-                    <img src="${product.image}" alt="">
-                    <h2 class="Vorunafn">${product.name}</h2>
+        // Create a button for each category
+        data.items.forEach(category => {
+            const button = document.createElement('button');
+            button.className = 'button-value';
+            button.innerText = category.title;
+            button.onclick = () => filterProduct(category.title);
+            buttonsDiv.appendChild(button);
+        });
+        // Add 'Allt' button
+        const allButton = document.createElement('button');
+        allButton.className = 'button-value';
+        allButton.innerText = 'Allt';
+        allButton.onclick = () => filterProduct('allt');
+        buttonsDiv.appendChild(allButton);
+    });
+
+const addDataToHTML=()=>{
+    products.length>0&&products.forEach(t=>{
+        let a=document.createElement("div");
+        a.dataset.id=t.id;
+        a.classList.add("item");
+        a.classList.add(t.category_title);
+        a.innerHTML=`<a href="vorusida.html?id=${t.id}">
+                    <img src="${t.image}" alt="">
+                    <h2 class="Vorunafn">${t.title}</h2>
                 </a>
-                
-                <h4>${product.category}</h4>
-                <div class="price">${product.price}kr</div>
+                <h4>${t.category_title}</h4>
+                <div class="price">${t.price}kr</div>
                 <button class="addCart">Add To Cart</button>`;
-            listProductHTML.appendChild(newProduct);
-        });
-    }
-}
-
-
-
-
-    listProductHTML.addEventListener('click', (event) => {
-        let positionClick = event.target;
-        if(positionClick.classList.contains('addCart')){
-            let id_product = positionClick.parentElement.dataset.id;
-            addToCart(id_product);
-        } // þetta bætir við úr product cardi yfir í körfu
+        listProductHTML.appendChild(a)
     })
-const addToCart = (product_id) => {
-    let positionThisProductInCart = cart.findIndex((value) => value.product_id == product_id);
-    if(cart.length <= 0){
-        cart = [{
-            product_id: product_id,
-            quantity: 1
-        }];
-    }else if(positionThisProductInCart < 0){
-        cart.push({
-            product_id: product_id,
-            quantity: 1
-        });
-    }else{
-        cart[positionThisProductInCart].quantity = cart[positionThisProductInCart].quantity + 1;
-    }
-    addCartToHTML();
-    addCartToMemory();
-}
-const addCartToMemory = () => {
-    localStorage.setItem('cart', JSON.stringify(cart)); // memory 1
-} 
-const addCartToHTML = () => {
-    listCartHTML.innerHTML = '';
-    let totalQuantity = 0;
-    let totalPrice = 0; // total byrjar sem 0
-    if(cart.length > 0){
-        cart.forEach(item => {
-            totalQuantity = totalQuantity +  item.quantity;
-            let newItem = document.createElement('div');
-            newItem.classList.add('item');
-            newItem.dataset.id = item.product_id;
+};
 
-            let positionProduct = products.findIndex((value) => value.id == item.product_id);
-            let info = products[positionProduct];
-            listCartHTML.appendChild(newItem);
-            newItem.innerHTML = `
+listProductHTML.addEventListener("click",t=>{
+    let a=t.target;
+    a.classList.contains("addCart")&&addToCart(a.parentElement.dataset.id)
+});
+
+const addToCart=t=>{
+    let a=cart.findIndex(a=>a.product_id==t);
+    cart.length<=0?cart=[{product_id:t,quantity:1}]:a<0?cart.push({product_id:t,quantity:1}):cart[a].quantity=cart[a].quantity+1;
+    addCartToHTML();
+    addCartToMemory()
+};
+
+addCartToMemory=()=>{localStorage.setItem("cart",JSON.stringify(cart))};
+
+addCartToHTML=()=>{
+    listCartHTML.innerHTML="";
+    let t=0,a=0;
+    cart.length>0&&cart.forEach(e=>{
+        t+=e.quantity;
+        let r=document.createElement("div");
+        r.classList.add("item");
+        r.dataset.id=e.product_id;
+        let i=products[products.findIndex(t=>t.id==e.product_id)];
+        listCartHTML.appendChild(r);
+        r.innerHTML=`
             <div class="image">
-                    <img src="${info.image}">
+                    <img src="${i.image}">
                 </div>
                 <div class="name">
-                ${info.name}
+                ${i.title}
                 </div>
-                <div class="totalPrice">${info.price * item.quantity} kr</div>
+                <div class="totalPrice">${i.price*e.quantity} kr</div>
                 <div class="quantity">
                     <span class="minus"><</span>
-                    <span>${item.quantity}</span>
+                    <span>${e.quantity}</span>
                     <span class="plus">></span>
                 </div>
             `;
-            totalPrice += info.price * item.quantity; // reiknar total verð
-        })
-    }
-    iconCartSpan.innerText = totalQuantity;
+        a+=i.price*e.quantity
+    });
+    iconCartSpan.innerText=t;
+    total.innerText=a.toLocaleString()
+};
 
-    total.innerText = totalPrice.toLocaleString(); // sýnir total verð
+function filterProduct(t){
+    document.querySelectorAll(".button-value").forEach(a=>{
+        t.toUpperCase()==a.innerText.toUpperCase()?a.classList.add("active"):a.classList.remove("active")
+    });
+    document.querySelectorAll(".item").forEach(a=>{
+        "allt"==t?a.classList.remove("hide"):a.classList.contains(t)?a.classList.remove("hide"):a.classList.add("hide")
+    })
 }
 
-//filterinn
-function filterProduct(value) {
-    //Button class code
-    let buttons = document.querySelectorAll(".button-value");
-    buttons.forEach((button) => {
-      //checkar (og er case sensetive) hvort að category heiti eru eins
-      if (value.toUpperCase() == button.innerText.toUpperCase()) {
-        button.classList.add("active");
-      } else {
-        button.classList.remove("active");
-      }
-    });
-  
-    //velur öll items
-    let elements = document.querySelectorAll(".item");
-    //fer í gegnum öll items
-    elements.forEach((element) => {
-      //sýnir allar vörur þegar flokkurinn alt er valinn
-      if (value == "allt") {
-        element.classList.remove("hide");
-      } else {
-        //skoðar öll prodduct hvort þau séu í gefnum flokk
-        if (element.classList.contains(value)) {
-          //sýnir þau sem eru í gefnum flokk
-          element.classList.remove("hide");
-        } else {
-          //felur öll sem eru ekki í flokk
-          element.classList.add("hide");
-        }
-      }
-    });
-  }
-  
-  //í upphafi er flokkurinn allt valið
-  window.onload = () => {
-    filterProduct("allt");
-  };
+window.onload=()=>{filterProduct("allt")};
 
-
-listCartHTML.addEventListener('click', (event) => {
-    let positionClick = event.target;
-    if(positionClick.classList.contains('minus') || positionClick.classList.contains('plus')){
-        let product_id = positionClick.parentElement.parentElement.dataset.id;
-        let type = 'minus';
-        if(positionClick.classList.contains('plus')){
-            type = 'plus';
-        }
-        changeQuantityCart(product_id, type);
+listCartHTML.addEventListener("click",t=>{
+    let a=t.target;
+    if(a.classList.contains("minus")||a.classList.contains("plus")){
+        let e=a.parentElement.parentElement.dataset.id,r="minus";
+        a.classList.contains("plus")&&(r="plus");
+        changeQuantityCart(e,r)
     }
-})
-const changeQuantityCart = (product_id, type) => {
-    let positionItemInCart = cart.findIndex((value) => value.product_id == product_id);
-    if(positionItemInCart >= 0){
-        let info = cart[positionItemInCart];
-        switch (type) {
-            case 'plus':
-                cart[positionItemInCart].quantity = cart[positionItemInCart].quantity + 1;
-                break;
-        
-            default:
-                let changeQuantity = cart[positionItemInCart].quantity - 1;
-                if (changeQuantity > 0) {
-                    cart[positionItemInCart].quantity = changeQuantity;
-                }else{
-                    cart.splice(positionItemInCart, 1);
-                }
-                break;
+});
+
+const changeQuantityCart=(t,a)=>{
+    let e=cart.findIndex(a=>a.product_id==t);
+    if(e>=0){
+        if(cart[e],"plus"===a)cart[e].quantity=cart[e].quantity+1;
+        else{
+            let r=cart[e].quantity-1;
+            r>0?cart[e].quantity=r:cart.splice(e,1)
         }
     }
     addCartToHTML();
-    addCartToMemory();
-}
-
-
-
-
-
-const initApp = () => { //byrjar forrit og þá memory 2
-    fetch("../products.json")
-        .then(response => response.json())
-        .then(data => {
-            products = data;
-            addDataToHTML();
-
-            // tjekkar ef það er ehv data á localStorage
-            if(localStorage.getItem("cart")) {
-                // Parse (tjáir?) körfudata úr localstorage 
-                cart = JSON.parse(localStorage.getItem("cart"));
-
-                // Addar körfu data í html
-                addCartToHTML();
-            }
-        }); 
+    addCartToMemory()
 };
+
+initApp=()=>{
+    fetch("https://vef1-2023-h2-api-791d754dda5b.herokuapp.com/products")
+    .then(t=>t.json())
+    .then(t=>{
+        products=t.items;
+        addDataToHTML();
+        localStorage.getItem("cart")&&(cart=JSON.parse(localStorage.getItem("cart")),addCartToHTML())
+    })
+};
+
+document.querySelector('.listProduct').style.gridTemplateColumns = 'repeat(4, 1fr)';
 
 initApp();
