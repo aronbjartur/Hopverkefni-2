@@ -35,25 +35,8 @@ header{
     top: 50%;
     right: -20px;
 }
-.title a {
-    text-decoration: none;
-    color: inherit;
+.title{
     font-size: xx-large;
-}
-
-.title a:hover {
-    text-decoration: none; 
-}
-
-.vorulisti {
-    text-decoration: none;
-    color: inherit;
-}
-
-.vorulisti :hover {
-    text-decoration: none; 
-}
-
 }
 .listProduct .item img{
     width: 90%;
@@ -235,4 +218,22 @@ body.showCart .container{
     .similar-product-item {
         width: 48%; /* Adjust width for smaller screens */
     }
+}
+
+
+/* Remove underline and set link color */
+a {
+    text-decoration: none;
+    color: #353432;
+}
+
+/* Set visited link color */
+a:visited {
+    color: #353432;
+}
+
+/* Set hover link color */
+a:hover {
+    color: #0e4ce8;
+    text-decoration: underline;
 }
