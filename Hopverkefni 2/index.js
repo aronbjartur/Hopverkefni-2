@@ -8,6 +8,8 @@ let listProductHTML = document.querySelector(".listProduct"),
     products = [],
     cart = [];
 
+
+
 iconCart.addEventListener("click", () => {
     body.classList.toggle("showCart")
 });

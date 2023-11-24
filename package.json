@@ -3,10 +3,12 @@
     "eslint": "^8.54.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.0",
+    "sass": "^1.69.5",
     "stylelint": "^15.11.0",
     "stylelint-config-standard": "^34.0.0",
-    "extends": "stylelint-config-standard",
-    "extends": "stylelint-config-standard-scss"
+    "stylelint-config-standard-scss": "^11.1.0",
+    "extends": "stylelint-config-standard-scss",
+    "extends": "stylelint-config-standard"
   },
   "scripts": {
     "start": "node index.js",
@@ -16,6 +18,4 @@
   "dependencies": {
     "open": "^9.1.0"
   }
-  
-  
 }
