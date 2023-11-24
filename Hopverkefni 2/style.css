@@ -54,7 +54,7 @@ h1{
 .listProduct {
     display: flex;
     flex-wrap: wrap;
-    gap: 0px;
+    gap: 30px;
     justify-content: space-between; /* Add this to space items evenly */
 }
 
@@ -93,13 +93,6 @@ h1{
     cursor: pointer;
 }
 
-/* Media query for smaller screens */
-@media screen and (max-width: 768px) {
-    .listProduct .item {
-        flex: 0 0 100%; /* Full width for smaller screens */
-        margin-bottom: 20px; /* Add spacing between stacked items */
-    }
-}
 
 
 
@@ -203,21 +196,23 @@ body.showCart .container{
     display: none;
   }
 
-@media only screen and (max-width: 992px) {
+  @media only screen and (max-width: 992px) {
     .listProduct{
         grid-template-columns: repeat(3, 1fr);
     }
 }
-
-
-
 
 /* mobile */
 @media only screen and (max-width: 768px) {
     .listProduct{
         grid-template-columns: repeat(2, 1fr);
     }
+    .listProduct .item {
+        flex: 0 0 100%; /* Full width for smaller screens */
+        margin-bottom: 20px; /* Add spacing between stacked items */
+    }
 }
+
 
 
 .Vorunafn {
