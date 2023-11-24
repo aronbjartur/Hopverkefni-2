@@ -10,6 +10,7 @@ function displayProductDetails(t){
         o=document.getElementById("product-category"),
         d=document.getElementById("product-description");
     e&&(e.innerText=t.title),
+    r.classList.add("product-item"),
     r instanceof HTMLImageElement&&(r.src=t.image),
     i&&(i.innerText=`Price: ${t.price} kr`),
     o&&(o.innerText=`Category: ${t.category_title||""}`),

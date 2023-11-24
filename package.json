@@ -1,0 +1,21 @@
+{
+  "devDependencies": {
+    "eslint": "^8.54.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "stylelint": "^15.11.0",
+    "stylelint-config-standard": "^34.0.0",
+    "extends": "stylelint-config-standard",
+    "extends": "stylelint-config-standard-scss"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js & node -e \"require('open')('http://localhost:3000')\"",
+    "test": "jest"
+  },
+  "dependencies": {
+    "open": "^9.1.0"
+  }
+  
+  
+}
