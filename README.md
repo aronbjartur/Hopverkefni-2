@@ -10,7 +10,7 @@ Við notuðumst við eitt css skjal og gerðum js skjal fyrir hverja síðu, þ�
 
 Aron Bjartur Hilmarsson - abh41@hi.is - aronbjartur
 
-Patrekur Orri Guðjónsson - a - Orrinnn
+Patrekur Orri Guðjónsson - pog5@hi.is - Orrinnn
 
-Birgir Ómar Hlynsson - a - Biggihlyns
+Birgir Ómar Hlynsson - boh27@hi.is - Biggihlyns
 
