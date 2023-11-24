@@ -137,6 +137,5 @@ initApp=()=>{
     })
 };
 
-document.querySelector('.listProduct').style.gridTemplateColumns = 'repeat(4, 1fr)';
 
 initApp();

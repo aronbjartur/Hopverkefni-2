@@ -121,6 +121,32 @@ const initApp = () => {
     }
 };
 
-document.querySelector('.listProduct').style.gridTemplateColumns = 'repeat(2, 1fr)';
+// Check if '.listProduct' exists
+if (document.querySelector('.listProduct')) {
+    // Create a new style element
+    var style = document.createElement('style');
+
+    // Set the CSS in the style element
+    style.innerHTML = `
+    @media only screen and (max-width: 1500px) {
+        .listProduct{
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* mobile */
+    @media only screen and (max-width: 768px) {
+        .listProduct{
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }`;
+
+    // Append the style element to the head of the document
+    document.head.appendChild(style);
+} else {
+    console.log("No elements with the class '.listProduct' were found.");
+}
+
+
 
 initApp();
