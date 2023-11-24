@@ -48,30 +48,42 @@ h1{
     font-size: xx-large;
     margin-left: 20px;
 }
+
+
+
 .listProduct {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
+    justify-content: space-between; /* Add this to space items evenly */
 }
+
 .listProduct .item {
     background-color: #eee;
     padding: 20px;
     border-radius: 0px;
     text-align: center;
+    flex: 0 0 calc(30% - 20px); /* Adjust the width and gap as needed */
+    box-sizing: border-box; /* Include padding and border in the total width */
 }
+
 .listProduct .item img {
-    width: 300px; 
-    height: 200px; 
+    width: 100%;
+    height: 200px;
     object-fit: cover;
 }
-.listProduct .item h2{
+
+.listProduct .item h2 {
     font-weight: 500;
     font-size: large;
 }
-.listProduct .item .price{
+
+.listProduct .item .price {
     letter-spacing: 0px;
     font-size: medium;
 }
-.listProduct .item button{
+
+.listProduct .item button {
     background-color: #353432;
     color: #eee;
     border: none;
@@ -80,6 +92,15 @@ h1{
     border-radius: 20px;
     cursor: pointer;
 }
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+    .listProduct .item {
+        flex: 0 0 100%; /* Full width for smaller screens */
+        margin-bottom: 20px; /* Add spacing between stacked items */
+    }
+}
+
 
 
 /*filter*/
@@ -212,24 +233,33 @@ body.showCart .container{
     margin-bottom: 10px;
 }
 
+.similar-products-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
 .similar-product-item {
     width: 30%; /* Adjust the width as needed */
     margin: 1%; /* Add some margin between items */
     box-sizing: border-box; /* Include padding and border in the total width/height */
-    display: inline-block; /* Display items in a row */
 }
 
 .similar-product-item img {
-    max-width: 100%; /* Ensure images don't exceed the width of their container */
-    height: auto; /* Maintain the aspect ratio of the images */
+    width: 100%; /* Ensure images take up the full width of their container */
+    height: 100%; /* Set a fixed height for uniformity */
+    max-height: 250px;
+    object-fit: cover; /* Maintain the aspect ratio and cover the container */
 }
 
 /* Media query for smaller screens */
 @media screen and (max-width: 768px) {
     .similar-product-item {
-        width: 48%; /* Adjust width for smaller screens */
+        width: 52%; /* Adjust width for smaller screens */
     }
 }
+
+
 
 
 /* Remove underline and set link color */
@@ -249,3 +279,60 @@ a:hover {
     text-decoration: underline;
 }
 
+
+
+
+.product-container {
+    display: flex;
+}
+
+.header-content {
+    margin-bottom: 20px; /* Add spacing between header and other content */
+}
+
+#product-image {
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+    max-height: 1000px;
+    margin-bottom: 20px; /* Add spacing between image and other content */
+}
+
+.right-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 20px;
+}
+
+#product-title {
+    font-size: 24px;
+}
+
+#product-price {
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#product-category {
+    
+    margin-bottom: 10px;
+}
+
+#product-description {
+    text-align: left;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+    .product-container {
+        flex-direction: column; /* Change to a column layout on smaller screens */
+    }
+
+    .right-content {
+        margin-left: 0; /* Remove left margin on smaller screens */
+    }
+}
